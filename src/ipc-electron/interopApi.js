@@ -23,6 +23,28 @@ class InteropApi {
     }
   
     async callMethod(className, methodName, ...args) {
+			if (WEB) {
+				console.log('InteropApi.callMethod', className, methodName, args);
+				const response = await fetch('/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						className,
+						methodName,
+						args
+					})
+				});
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				const data = await response.json();
+				if (data.status !== 'success') {
+					throw new Error(`Error calling ${className}.${methodName}: ${data.error}`);
+				}
+				return data.result;
+			}
     	return window.interopApi.callDotNetMethod(className, methodName, args)
     		.then(result => {
     			return result;
