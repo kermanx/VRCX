@@ -17,10 +17,10 @@ class WebApiService {
         if (!options) {
             throw new Error('options is required');
         }
-        if (LINUX) {
+        if (LINUX || WEB) {
             const requestJson = JSON.stringify(options);
             var json = await WebApi.ExecuteJson(requestJson);
-            var data = JSON.parse(json);
+            var data = typeof json === 'string' ? JSON.parse(json) : json;
             if (data.status === -1) {
                 throw new Error(data.message);
             }

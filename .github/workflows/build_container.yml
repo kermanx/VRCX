@@ -4,6 +4,9 @@ on:
     push:
         branches:
             - '**'
+    pull_request:
+        branches:
+            - '**'
 
 jobs:
     build-and-publish:
@@ -22,12 +25,17 @@ jobs:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
-            # Build the container image
+            # Build the container image with versioning
             - name: Build container image
               run: |
-                  docker build -t ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):latest .
+                  IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+                  GIT_SHA=${{ github.sha }}
+                  docker build -t $IMAGE_TAG:latest -t $IMAGE_TAG:$GIT_SHA .
 
             # Push the container image to GitHub Container Registry
             - name: Push container image
               run: |
-                  docker push ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):latest
+                  IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+                  GIT_SHA=${{ github.sha }}
+                  docker push $IMAGE_TAG:latest
+                  docker push $IMAGE_TAG:$GIT_SHA

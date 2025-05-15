@@ -13,7 +13,7 @@ export default class extends baseClass {
     _methods = {
         async backupVrcRegistry(name) {
             var regJson;
-            if (LINUX) {
+            if (LINUX || WEB) {
                 regJson = await AppApi.GetVRChatRegistryJson();
                 regJson = JSON.parse(regJson);
             } else {

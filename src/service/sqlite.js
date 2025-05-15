@@ -2,7 +2,7 @@
 
 class SQLiteService {
     async execute(callback, sql, args = null) {
-        if (LINUX) {
+        if (LINUX || WEB) {
             if (args) {
                 args = new Map(Object.entries(args));
             }
@@ -26,7 +26,7 @@ class SQLiteService {
     }
 
     executeNonQuery(sql, args = null) {
-        if (LINUX && args) {
+        if ((LINUX || WEB) && args) {
             args = new Map(Object.entries(args));
         }
         return SQLite.ExecuteNonQuery(sql, args);

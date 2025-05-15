@@ -24,7 +24,6 @@ class InteropApi {
   
     async callMethod(className, methodName, ...args) {
 			if (WEB) {
-				console.log('InteropApi.callMethod', className, methodName, args);
 				const response = await fetch('/', {
 					method: 'POST',
 					headers: {
@@ -33,7 +32,12 @@ class InteropApi {
 					body: JSON.stringify({
 						className,
 						methodName,
-						args
+						args: args.map(arg => {
+							if (typeof arg === 'object' && arg instanceof Map) {
+								return { ...Object.fromEntries(arg), __is_map__: true };
+							}
+							return arg;
+						})
 					})
 				});
 				if (!response.ok) {

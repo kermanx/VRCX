@@ -95,7 +95,7 @@ export default class extends baseClass {
                         (this.isRunningUnderWine || LINUX) &&
                         --this.nextGameRunningCheck <= 0
                     ) {
-                        if (LINUX) {
+                        if (LINUX || WEB) {
                             this.nextGameRunningCheck = 1;
                             $app.updateIsGameRunning(
                                 await AppApi.IsGameRunning(),

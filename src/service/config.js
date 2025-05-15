@@ -40,7 +40,7 @@ async function syncLoop() {
             console.error(err);
         }
     }
-    workerTimers.setTimeout(() => syncLoop(), 100);
+    workerTimers.setTimeout(() => syncLoop(), 1000);
 }
 
 class ConfigRepository extends SharedRepository {

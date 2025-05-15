@@ -10690,7 +10690,7 @@ console.log(`isLinux: ${LINUX}`);
     $app.data.inGameGroupOrder = [];
 
     $app.methods.getVRChatRegistryKey = async function (key) {
-        if (LINUX) {
+        if (LINUX || WEB) {
             return AppApi.GetVRChatRegistryKeyString(key);
         }
         return AppApi.GetVRChatRegistryKey(key);

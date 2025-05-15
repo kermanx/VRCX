@@ -60,16 +60,31 @@ const server = http.createServer(async (req, res) => {
     req.on('data', chunk => {
       body += chunk.toString();
     });
-    req.on('end', () => {
+    req.on('end', async () => {
       try {
         const { className, methodName, args } = JSON.parse(body);
-        console.log('http', className, methodName, args);
-        const result = interopApi.callMethod(className, methodName, args);
+        const result = await interopApi.callMethod(
+          className,
+          methodName,
+          args.map(arg => {
+            if (arg && arg.__is_map__) {
+              const map = new Map();
+              for (const key in arg) {
+                if (key !== '__is_map__') {
+                  map.set(key, arg[key]);
+                }
+              }
+              return map;
+            }
+            return arg;
+          }),
+        );
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ status: 'success', result }));
       } catch (err) {
+        console.error('Error:', err);
         res.writeHead(400, { 'Content-Type': 'text/plain' });
-        res.end('Invalid JSON');
+        res.end('Error processing request ' + err);
       }
     });
   } else {
