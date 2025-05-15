@@ -1,33 +1,33 @@
 name: Build and Publish Container
 
 on:
-  push:
-    branches:
-      - '**'
+    push:
+        branches:
+            - '**'
 
 jobs:
-  build-and-publish:
-    runs-on: ubuntu-latest
+    build-and-publish:
+        runs-on: ubuntu-latest
 
-    steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+        steps:
+            # Checkout the repository
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-      # Log in to GitHub Container Registry
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+            # Log in to GitHub Container Registry
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v2
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build the container image
-      - name: Build container image
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest .
+            # Build the container image
+            - name: Build container image
+              run: |
+                  docker build -t ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):latest .
 
-      # Push the container image to GitHub Container Registry
-      - name: Push container image
-        run: |
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
+            # Push the container image to GitHub Container Registry
+            - name: Push container image
+              run: |
+                  docker push ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):latest
