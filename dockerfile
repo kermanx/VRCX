@@ -35,13 +35,9 @@ COPY --from=build-env /app/build/html ./build/html
 COPY --from=build-env /app/Server ./Server
 COPY --from=build-env /app/VRCX.ico ./VRCX.ico
 
-# Define build arguments for environment variables
-ARG VRCX_PORT=3333
-ARG VRCX_PASSWORD=""
-
-# Set environment variables using the build arguments
-ENV VRCX_PORT=${VRCX_PORT}
-ENV VRCX_PASSWORD=${VRCX_PASSWORD}
+# Set environment variables
+ENV VRCX_PORT=3333
+ENV VRCX_PASSWORD=""
 ENV VRCX_ROOT_DIR=/app
 
 # START BACKEND
