@@ -33,8 +33,8 @@ WORKDIR /app
 # Copy the build artifacts from the previous stage
 COPY --from=build-env /app/build ./build
 COPY --from=build-env /app/src-backend ./src-backend
-COPY --from=build-env package.json ./
-COPY --from=build-env package-lock.json ./
+COPY --from=build-env /app/package.json ./
+COPY --from=build-env /app/package-lock.json ./
 
 # Install Node 24 from NodeSource
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
