@@ -168,6 +168,11 @@ console.log(`isLinux: ${LINUX}`);
 
 // #region | Hey look it's most of VRCX!
 (async function () {
+    const _promises = [];
+    function _run(f) {
+        _promises.push(f());
+    }
+
     // #region | Init Cef C# bindings
     if (WINDOWS) {
         await CefSharp.BindObjectAsync(
@@ -5921,25 +5926,37 @@ console.log(`isLinux: ${LINUX}`);
     $app.data.feedTable.filter = JSON.parse(
         await configRepository.getString('VRCX_feedTableFilters', '[]')
     );
+
+    _run(async () => {
     $app.data.feedTable.vip = await configRepository.getBool(
         'VRCX_feedTableVIPFilter',
         false
     );
+    })
+    _run(async () => {
     $app.data.gameLogTable.vip = false;
     // gameLog loads before favorites
     // await configRepository.getBool(
     //     'VRCX_gameLogTableVIPFilter',
     //     false
     // );
+    })
+    _run(async () => {
     $app.data.gameLogTable.filter = JSON.parse(
         await configRepository.getString('VRCX_gameLogTableFilters', '[]')
     );
+    })
+    _run(async () => {
     $app.data.friendLogTable.filters[0].value = JSON.parse(
         await configRepository.getString('VRCX_friendLogTableFilters', '[]')
     );
+    })
+    _run(async () => {
     $app.data.notificationTable.filters[0].value = JSON.parse(
         await configRepository.getString('VRCX_notificationTableFilters', '[]')
     );
+    })
+    _run(async () => {
     $app.data.photonEventTableTypeFilter = JSON.parse(
         await configRepository.getString('VRCX_photonEventTypeFilter', '[]')
     );
@@ -5947,12 +5964,15 @@ console.log(`isLinux: ${LINUX}`);
         $app.data.photonEventTableTypeFilter;
     $app.data.photonEventTablePrevious.filters[1].value =
         $app.data.photonEventTableTypeFilter;
+    })
+    _run(async () => {
     $app.data.photonEventTableTypeOverlayFilter = JSON.parse(
         await configRepository.getString(
             'VRCX_photonEventTypeOverlayFilter',
             '[]'
         )
     );
+    })
 
     // #endregion
     // #region | App: Profile + Settings
@@ -6023,131 +6043,194 @@ console.log(`isLinux: ${LINUX}`);
         layout: 'table'
     };
     $app.data.visits = 0;
+    _run(async () => {
     $app.data.openVR = await configRepository.getBool('openVR', false);
+    })
+    _run(async () => {
     $app.data.openVRAlways = await configRepository.getBool(
         'openVRAlways',
         false
     );
+    })
+    _run(async () => {
     $app.data.overlaybutton = await configRepository.getBool(
         'VRCX_overlaybutton',
         false
     );
+    })
+    _run(async () => {
     $app.data.overlayHand = await configRepository.getInt(
         'VRCX_overlayHand',
         0
     );
+    })
+    _run(async () => {
     $app.data.hidePrivateFromFeed = await configRepository.getBool(
         'VRCX_hidePrivateFromFeed',
         false
     );
+    })
+    _run(async () => {
     $app.data.hideDevicesFromFeed = await configRepository.getBool(
         'VRCX_hideDevicesFromFeed',
         false
     );
+    })
+    _run(async () => {
     $app.data.vrOverlayCpuUsage = await configRepository.getBool(
         'VRCX_vrOverlayCpuUsage',
         false
     );
+    })
+    _run(async () => {
     $app.data.hideUptimeFromFeed = await configRepository.getBool(
         'VRCX_hideUptimeFromFeed',
         false
     );
+    })
+    _run(async () => {
     $app.data.pcUptimeOnFeed = await configRepository.getBool(
         'VRCX_pcUptimeOnFeed',
         false
     );
+    })
+    _run(async () => {
     $app.data.overlayNotifications = await configRepository.getBool(
         'VRCX_overlayNotifications',
         true
     );
+    })
+    _run(async () => {
     $app.data.overlayWrist = await configRepository.getBool(
         'VRCX_overlayWrist',
         false
     );
+    })
+    _run(async () => {
     $app.data.xsNotifications = await configRepository.getBool(
         'VRCX_xsNotifications',
         true
     );
+    })
+    _run(async () => {
     $app.data.ovrtHudNotifications = await configRepository.getBool(
         'VRCX_ovrtHudNotifications',
         true
     );
+    })
+    _run(async () => {
     $app.data.ovrtWristNotifications = await configRepository.getBool(
         'VRCX_ovrtWristNotifications',
         false
     );
+    })
+    _run(async () => {
     $app.data.imageNotifications = await configRepository.getBool(
         'VRCX_imageNotifications',
         true
     );
+    })
+    _run(async () => {
     $app.data.desktopToast = await configRepository.getString(
         'VRCX_desktopToast',
         'Never'
     );
+    })
+    _run(async () => {
     $app.data.afkDesktopToast = await configRepository.getBool(
         'VRCX_afkDesktopToast',
         false
     );
+    })
+    _run(async () => {
     $app.data.overlayToast = await configRepository.getString(
         'VRCX_overlayToast',
         'Game Running'
     );
+    })
+    _run(async () => {
     $app.data.minimalFeed = await configRepository.getBool(
         'VRCX_minimalFeed',
         false
     );
+    })
+    _run(async () => {
     $app.data.displayVRCPlusIconsAsAvatar = await configRepository.getBool(
         'displayVRCPlusIconsAsAvatar',
         true
     );
+    })
+    _run(async () => {
     $app.data.hideTooltips = await configRepository.getBool(
         'VRCX_hideTooltips',
         false
     );
+    })
+    _run(async () => {
     $app.data.hideNicknames = await configRepository.getBool(
         'VRCX_hideNicknames',
         false
     );
+    })
+    _run(async () => {
     $app.data.notificationTTS = await configRepository.getString(
         'VRCX_notificationTTS',
         'Never'
     );
+    })
+    _run(async () => {
     $app.data.notificationTTSNickName = await configRepository.getBool(
         'VRCX_notificationTTSNickName',
         false
     );
+    })
 
     // It's not necessary to store it in configRepo because it's rarely used.
     $app.data.isTestTTSVisible = false;
 
+    _run(async () => {
     $app.data.notificationTTSVoice = await configRepository.getString(
         'VRCX_notificationTTSVoice',
         '0'
     );
+    })
+    _run(async () => {
     $app.data.notificationTimeout = await configRepository.getString(
         'VRCX_notificationTimeout',
         '3000'
     );
+    })
+    _run(async () => {
     $app.data.autoSweepVRChatCache = await configRepository.getBool(
         'VRCX_autoSweepVRChatCache',
         false
     );
+    })
+    _run(async () => {
     $app.data.relaunchVRChatAfterCrash = await configRepository.getBool(
         'VRCX_relaunchVRChatAfterCrash',
         false
     );
+    })
+    _run(async () => {
     $app.data.vrcQuitFix = await configRepository.getBool(
         'VRCX_vrcQuitFix',
         true
     );
+    })
+    _run(async () => {
     $app.data.vrBackgroundEnabled = await configRepository.getBool(
         'VRCX_vrBackgroundEnabled',
         false
     );
+    })
+    _run(async () => {
     $app.data.asideWidth = await configRepository.getInt(
         'VRCX_sidePanelWidth',
         300
     );
+    })
+    _run(async () => {
     $app.data.autoUpdateVRCX = await configRepository.getString(
         'VRCX_autoUpdateVRCX',
         'Auto Download'
@@ -6155,10 +6238,14 @@ console.log(`isLinux: ${LINUX}`);
     if ($app.data.autoUpdateVRCX === 'Auto Install') {
         $app.data.autoUpdateVRCX = 'Auto Download';
     }
+    })
+    _run(async () => {
     $app.data.branch = await configRepository.getString(
         'VRCX_branch',
         'Stable'
     );
+    })
+    _run(async () => {
     $app.data.maxTableSize = await configRepository.getInt(
         'VRCX_maxTableSize',
         1000
@@ -6167,19 +6254,27 @@ console.log(`isLinux: ${LINUX}`);
         $app.data.maxTableSize = 1000;
     }
     database.setmaxTableSize($app.data.maxTableSize);
+    })
+    _run(async () => {
     $app.data.photonLobbyTimeoutThreshold = await configRepository.getInt(
         'VRCX_photonLobbyTimeoutThreshold',
         6000
     );
+    })
+    _run(async () => {
     $app.data.clearVRCXCacheFrequency = await configRepository.getInt(
         'VRCX_clearVRCXCacheFrequency',
         172800
     );
+    })
+    _run(async () => {
     $app.data.avatarRemoteDatabase = await configRepository.getBool(
         'VRCX_avatarRemoteDatabase',
         true
     );
+    })
     $app.data.avatarRemoteDatabaseProvider = '';
+    _run(async () => {
     $app.data.avatarRemoteDatabaseProviderList = JSON.parse(
         await configRepository.getString(
             'VRCX_avatarRemoteDatabaseProviderList',
@@ -6199,14 +6294,17 @@ console.log(`isLinux: ${LINUX}`);
             JSON.stringify($app.data.avatarRemoteDatabaseProviderList)
         );
     }
+    })
     $app.data.pendingOfflineDelay = 180000;
 
     // It's a mess, but it'll be fine afterward with the state manager
+    _run(async () => {
     $app.data.isAgeGatedInstancesVisible = await configRepository.getBool(
         'VRCX_isAgeGatedInstancesVisible',
         true
     );
-
+    })
+    _run(async () => {
     $app.methods.toggleIsAgeGatedInstancesVisible = function () {
         this.isAgeGatedInstancesVisible = !this.isAgeGatedInstancesVisible;
         configRepository.setBool(
@@ -6214,7 +6312,8 @@ console.log(`isLinux: ${LINUX}`);
             this.isAgeGatedInstancesVisible
         );
     };
-
+    })
+    _run(async () => {
     if (await configRepository.getString('VRCX_avatarRemoteDatabaseProvider')) {
         // move existing provider to new list
         var avatarRemoteDatabaseProvider = await configRepository.getString(
@@ -6239,27 +6338,38 @@ console.log(`isLinux: ${LINUX}`);
         $app.data.avatarRemoteDatabaseProvider =
             $app.data.avatarRemoteDatabaseProviderList[0];
     }
+    })
+    _run(async () => {
     $app.data.sortFavorites = await configRepository.getBool(
         'VRCX_sortFavorites',
         true
     );
+    })
+    _run(async () => {
     $app.data.randomUserColours = await configRepository.getBool(
         'VRCX_randomUserColours',
         false
     );
+    })
+    _run(async () => {
     $app.data.hideUserNotes = await configRepository.getBool(
         'VRCX_hideUserNotes',
         false
     );
+    })
+    _run(async () => {
     $app.data.hideUserMemos = await configRepository.getBool(
         'VRCX_hideUserMemos',
         false
     );
+    })
+    _run(async () => {
     $app.data.hideUnfriends = await configRepository.getBool(
         'VRCX_hideUnfriends',
         false
     );
     $app.data.friendLogTable.filters[2].value = $app.data.hideUnfriends;
+    })
     $app.methods.saveOpenVROption = async function (configKey = '') {
         switch (configKey) {
             case 'openVR':
@@ -6339,141 +6449,145 @@ console.log(`isLinux: ${LINUX}`);
                 break;
         }
 
-        await configRepository.setBool('openVR', this.openVR);
+        await Promise.all([
+        configRepository.setBool('openVR', this.openVR),
 
-        await configRepository.setBool('openVRAlways', this.openVRAlways);
-        await configRepository.setBool(
+        configRepository.setBool('openVRAlways', this.openVRAlways),
+        configRepository.setBool(
             'VRCX_overlaybutton',
             this.overlaybutton
-        );
-        this.overlayHand = parseInt(this.overlayHand, 10);
-        if (isNaN(this.overlayHand)) {
-            this.overlayHand = 0;
-        }
-        await configRepository.setInt('VRCX_overlayHand', this.overlayHand);
+        ),
+        configRepository.setInt('VRCX_overlayHand', (() => {
+            this.overlayHand = parseInt(this.overlayHand, 10);
+            if (isNaN(this.overlayHand)) {
+                this.overlayHand = 0;
+            }
+            return this.overlayHand;
+        })()),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_hidePrivateFromFeed',
             this.hidePrivateFromFeed
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_hideDevicesFromFeed',
             this.hideDevicesFromFeed
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_vrOverlayCpuUsage',
             this.vrOverlayCpuUsage
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_hideUptimeFromFeed',
             this.hideUptimeFromFeed
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_pcUptimeOnFeed',
             this.pcUptimeOnFeed
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_overlayNotifications',
             this.overlayNotifications
-        );
+        ),
 
-        await configRepository.setBool('VRCX_overlayWrist', this.overlayWrist);
+        configRepository.setBool('VRCX_overlayWrist', this.overlayWrist),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_xsNotifications',
             this.xsNotifications
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_ovrtHudNotifications',
             this.ovrtHudNotifications
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_ovrtWristNotifications',
             this.ovrtWristNotifications
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_imageNotifications',
             this.imageNotifications
-        );
+        ),
 
-        await configRepository.setString(
+        configRepository.setString(
             'VRCX_desktopToast',
             this.desktopToast
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_afkDesktopToast',
             this.afkDesktopToast
-        );
+        ),
 
-        await configRepository.setString(
+        configRepository.setString(
             'VRCX_overlayToast',
             this.overlayToast
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_notificationTTSNickName',
             this.notificationTTSNickName
-        );
+        ),
 
-        await configRepository.setBool('VRCX_minimalFeed', this.minimalFeed);
+        configRepository.setBool('VRCX_minimalFeed', this.minimalFeed),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'displayVRCPlusIconsAsAvatar',
             this.displayVRCPlusIconsAsAvatar
-        );
+        ),
 
-        await configRepository.setBool('VRCX_hideTooltips', this.hideTooltips);
+        configRepository.setBool('VRCX_hideTooltips', this.hideTooltips),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_hideNicknames',
             this.hideNicknames
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_autoSweepVRChatCache',
             this.autoSweepVRChatCache
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_relaunchVRChatAfterCrash',
             this.relaunchVRChatAfterCrash
-        );
+        ),
 
-        await configRepository.setBool('VRCX_vrcQuitFix', this.vrcQuitFix);
+        configRepository.setBool('VRCX_vrcQuitFix', this.vrcQuitFix),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_vrBackgroundEnabled',
             this.vrBackgroundEnabled
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_avatarRemoteDatabase',
             this.avatarRemoteDatabase
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_instanceUsersSortAlphabetical',
             this.instanceUsersSortAlphabetical
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_randomUserColours',
             this.randomUserColours
-        );
+        ),
 
-        await configRepository.setBool(
+        configRepository.setBool(
             'VRCX_udonExceptionLogging',
             this.udonExceptionLogging
-        );
+        ),
+        ]);
 
         this.updateSharedFeed(true);
         this.updateVRConfigVars();
@@ -6648,6 +6762,7 @@ console.log(`isLinux: ${LINUX}`);
         }
     };
 
+    _run(async () => {
     $app.data.isStartAtWindowsStartup = await configRepository.getBool(
         'VRCX_StartAtWindowsStartup',
         false
@@ -6690,6 +6805,7 @@ console.log(`isLinux: ${LINUX}`);
         'true';
     $app.data.disableWorldDatabase =
         (await VRCXStorage.Get('VRCX_DisableWorldDatabase')) === 'true';
+    })
 
     $app.methods.saveVRCXWindowOption = async function (configKey = '') {
         switch (configKey) {
@@ -6779,40 +6895,56 @@ console.log(`isLinux: ${LINUX}`);
         }
     };
 
+    _run(async () => {
     $app.data.photonEventOverlay = await configRepository.getBool(
         'VRCX_PhotonEventOverlay',
         false
     );
+    })
+    _run(async () => {
     $app.data.timeoutHudOverlay = await configRepository.getBool(
         'VRCX_TimeoutHudOverlay',
         false
     );
+    })
+    _run(async () => {
     $app.data.timeoutHudOverlayFilter = await configRepository.getString(
         'VRCX_TimeoutHudOverlayFilter',
         'Everyone'
     );
+    })
+    _run(async () => {
     $app.data.photonEventOverlayFilter = await configRepository.getString(
         'VRCX_PhotonEventOverlayFilter',
         'Everyone'
     );
+    })
+    _run(async () => {
     $app.data.photonOverlayMessageTimeout = Number(
         await configRepository.getString(
             'VRCX_photonOverlayMessageTimeout',
             6000
         )
     );
+    })
+    _run(async () => {
     $app.data.gameLogDisabled = await configRepository.getBool(
         'VRCX_gameLogDisabled',
         false
     );
+    })
+    _run(async () => {
     $app.data.udonExceptionLogging = await configRepository.getBool(
         'VRCX_udonExceptionLogging',
         false
     );
+    })
+    _run(async () => {
     $app.data.instanceUsersSortAlphabetical = await configRepository.getBool(
         'VRCX_instanceUsersSortAlphabetical',
         false
     );
+    })
     $app.methods.saveEventOverlay = async function (configKey = '') {
         if (configKey === 'VRCX_PhotonEventOverlay') {
             this.photonEventOverlay = !this.photonEventOverlay;
@@ -6948,6 +7080,7 @@ console.log(`isLinux: ${LINUX}`);
 
     // Migrate old settings
     // Assume all exist if one does
+    _run(async () => {
     const orderFriendsGroupPrivate = await configRepository.getBool(
         'orderFriendGroupPrivate'
     );
@@ -6999,6 +7132,7 @@ console.log(`isLinux: ${LINUX}`);
             JSON.stringify(sortOrder)
         );
     }
+    })
 
     $app.methods.saveSidebarSortOrder = async function () {
         if (this.sidebarSortMethod1 === this.sidebarSortMethod2) {
@@ -7266,6 +7400,7 @@ console.log(`isLinux: ${LINUX}`);
     };
     await $app.methods.updateTrustColorClasses();
 
+    _run(async () => {
     $app.data.notificationPosition = await configRepository.getString(
         'VRCX_notificationPosition',
         'topCenter'
@@ -7326,6 +7461,7 @@ console.log(`isLinux: ${LINUX}`);
         'VRCX_showConfirmationOnSwitchAvatar',
         false
     );
+    })
 
     $app.methods.updateVRConfigVars = function () {
         var notificationTheme = 'relax';
@@ -13876,6 +14012,8 @@ console.log(`isLinux: ${LINUX}`);
     }
 
     // #endregion
+
+    await Promise.all(_promises);
 
     // "$app" is being replaced by Vue, update references inside all the classes
     $app = new Vue($app);
