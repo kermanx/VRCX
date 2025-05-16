@@ -25,8 +25,13 @@ RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
 # Build the frontend
 RUN npm run prod-web
 
-# Set environment variable
-ENV VRCX_PORT=3333
+# Define build arguments for environment variables
+ARG VRCX_PORT=3333
+ARG VRCX_PASSWORD=""
+
+# Set environment variables using the build arguments
+ENV VRCX_PORT=${VRCX_PORT}
+ENV VRCX_PASSWORD=${VRCX_PASSWORD}
 
 # START BACKEND
 ENTRYPOINT ["node", "./src-backend/index.js"]

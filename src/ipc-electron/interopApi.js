@@ -24,10 +24,17 @@ class InteropApi {
   
     async callMethod(className, methodName, ...args) {
 			if (WEB) {
+				let password = localStorage.getItem('VRCX_PASSWORD');
+				if (!password) {
+					password = prompt('Enter VRCX password:').trim();
+				}
+				localStorage.setItem('VRCX_PASSWORD', password);
+
 				const response = await fetch('/', {
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
+						'authorization': `Bearer ${password}`
 					},
 					body: JSON.stringify({
 						className,
@@ -40,6 +47,11 @@ class InteropApi {
 						})
 					})
 				});
+				if (response.status === 401) {
+					alert('Unauthorized. Please check your password.');
+					localStorage.removeItem('VRCX_PASSWORD');
+					return;
+				}
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}

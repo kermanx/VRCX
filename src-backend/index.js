@@ -20,10 +20,6 @@ interopApi.getDotNetObject('Discord').Init();
 interopApi.getDotNetObject('WebApi').Init();
 interopApi.getDotNetObject('LogWatcher').Init();
 
-// ipcMain.handle('callDotNetMethod', (event, className, methodName, args) => {
-//     return interopApi.callMethod(className, methodName, args);
-// });
-
 const server = http.createServer(async (req, res) => {
   if (req.method === 'GET') {
     const url = req.url === '/' ? '/index.html' : req.url;
@@ -56,6 +52,16 @@ const server = http.createServer(async (req, res) => {
       res.end('File not found');
     }
   } else if (req.method === 'POST') {
+    if (process.env.VRCX_PASSWORD) {
+      const authHeader = req.headers['authorization'];
+      if (!authHeader || authHeader !== `Bearer ${process.env.VRCX_PASSWORD}`) {
+        console.log('Unauthorized access attempt');
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        res.end('Unauthorized');
+        return;
+      }
+    }
+
     let body = '';
     req.on('data', chunk => {
       body += chunk.toString();
