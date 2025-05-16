@@ -6294,17 +6294,13 @@ console.log(`isLinux: ${LINUX}`);
             JSON.stringify($app.data.avatarRemoteDatabaseProviderList)
         );
     }
-    })
     $app.data.pendingOfflineDelay = 180000;
 
     // It's a mess, but it'll be fine afterward with the state manager
-    _run(async () => {
     $app.data.isAgeGatedInstancesVisible = await configRepository.getBool(
         'VRCX_isAgeGatedInstancesVisible',
         true
     );
-    })
-    _run(async () => {
     $app.methods.toggleIsAgeGatedInstancesVisible = function () {
         this.isAgeGatedInstancesVisible = !this.isAgeGatedInstancesVisible;
         configRepository.setBool(
