@@ -6,3 +6,4 @@ obj1/
 *.log
 *.DotSettings.user
 /.vs/
+/Server/bin/
