@@ -11,7 +11,7 @@ const interopApi = new InteropApi();
 const version = getVersion();
 console.log('Version:', version);
 
-interopApi.getDotNetObject('ProgramElectron').PreInit(version, []);
+interopApi.getDotNetObject('ProgramElectron').PreInit(version, ["--config=/VRCX/"]);
 interopApi.getDotNetObject('VRCXStorage').Load();
 interopApi.getDotNetObject('ProgramElectron').Init();
 interopApi.getDotNetObject('SQLiteLegacy').Init();
