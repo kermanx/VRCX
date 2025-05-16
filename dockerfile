@@ -41,6 +41,7 @@ ARG VRCX_PASSWORD=""
 # Set environment variables using the build arguments
 ENV VRCX_PORT=${VRCX_PORT}
 ENV VRCX_PASSWORD=${VRCX_PASSWORD}
+ENV VRCX_ROOT_DIR=/app
 
 # START BACKEND
 ENTRYPOINT ["./Server/bin/x64/Release/net9.0/Server"]

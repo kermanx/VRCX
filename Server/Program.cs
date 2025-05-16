@@ -33,9 +33,13 @@ namespace Server
             listener.Start();
             Console.WriteLine($"Server is running on {prefix}");
 
-            _rootDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..");
-            // Normalize the path to remove redundant segments
-            _rootDir = Path.GetFullPath(_rootDir);
+            _rootDir = Environment.GetEnvironmentVariable("VRCX_ROOT_DIR");
+            if (string.IsNullOrEmpty(_rootDir))
+            {
+                _rootDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..");
+                // Normalize the path to remove redundant segments
+                _rootDir = Path.GetFullPath(_rootDir);
+            }
             Console.WriteLine($"rootDir {_rootDir}");
 
             while (true)
