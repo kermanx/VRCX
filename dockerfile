@@ -43,7 +43,7 @@ ENV VRCX_PORT=${VRCX_PORT}
 ENV VRCX_PASSWORD=${VRCX_PASSWORD}
 
 # START BACKEND
-ENTRYPOINT ["./Server/Release/net9.0/Server"]
+ENTRYPOINT ["./Server/bin/x64/Release/net9.0/Server"]
 
 # Expose the port
 EXPOSE ${VRCX_PORT}
