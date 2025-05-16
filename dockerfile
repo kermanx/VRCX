@@ -13,7 +13,7 @@ RUN dotnet build 'Server/Server.csproj' \
     -p:Platform=x64 \
     -p:RestorePackagesConfig=true \
     -t:"Restore;Clean;Build" \
-    -m --self-contained
+    -m    
 
 # Install Node 24 from NodeSource
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
