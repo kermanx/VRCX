@@ -33,6 +33,7 @@ WORKDIR /app
 # Copy the build artifacts from the previous stage
 COPY --from=build-env /app/build/html ./build/html
 COPY --from=build-env /app/Server ./Server
+COPY --from=build-env /app/VRCX.ico ./VRCX.ico
 
 # Define build arguments for environment variables
 ARG VRCX_PORT=3333

@@ -6312,8 +6312,6 @@ console.log(`isLinux: ${LINUX}`);
             this.isAgeGatedInstancesVisible
         );
     };
-    })
-    _run(async () => {
     if (await configRepository.getString('VRCX_avatarRemoteDatabaseProvider')) {
         // move existing provider to new list
         var avatarRemoteDatabaseProvider = await configRepository.getString(
