@@ -25,6 +25,24 @@ RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
 # Build the frontend
 RUN npm run prod-web
 
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS prod-env
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the build artifacts from the previous stage
+COPY --from=build-env /app/build ./build
+COPY --from=build-env /app/src-backend ./src-backend
+COPY --from=build-env package.json ./
+COPY --from=build-env package-lock.json ./
+
+# Install Node 24 from NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get install -y nodejs
+
+# Install Node dependencies
+RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci --omit=dev
+
 # Define build arguments for environment variables
 ARG VRCX_PORT=3333
 ARG VRCX_PASSWORD=""
