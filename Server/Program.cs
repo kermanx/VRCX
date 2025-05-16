@@ -28,7 +28,7 @@ namespace Server
             await CallDotNetMethodAsync("LogWatcher", "Init", null);
 
             HttpListener listener = new();
-            string prefix = $"http://localhost:{Environment.GetEnvironmentVariable("VRCX_PORT") ?? "3333"}/";
+            string prefix = $"http://+:{Environment.GetEnvironmentVariable("VRCX_PORT") ?? "3333"}/";
             listener.Prefixes.Add(prefix);
             listener.Start();
             Console.WriteLine($"Server is running on {prefix}");
